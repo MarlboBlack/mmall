@@ -80,6 +80,29 @@ public class UserServiceImpl implements IUserService{
 		return ServerResponse.createBySuccessMessage("注册成功");
 	}
 	/**
+	 * 注册管理员
+	 */
+	@Override
+	public ServerResponse<String> registerAdmin(User user){
+		ServerResponse validResponse = this.checkVaild(user.getUsername(),Const.USERNAME);
+		if(!validResponse.isSuccess()){
+			return validResponse;
+		}
+		validResponse = this.checkVaild(user.getEmail(),Const.EMAIL);
+		if(!validResponse.isSuccess()){
+			return validResponse;
+		}
+		user.setRole(Const.Role.ROLE_ADMIN);
+		//MD5加密
+		user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
+		
+		int resultCount = userMapper.insert(user);
+		if(resultCount == 0){
+			return ServerResponse.createByErrorMessage("注册失败");
+		}
+		return ServerResponse.createBySuccessMessage("注册成功");
+	}
+	/**
 	 * 校验方法
 	 */
 	@Override
@@ -216,6 +239,18 @@ public class UserServiceImpl implements IUserService{
 		}
 		user.setPassword(StringUtils.EMPTY);
 		return ServerResponse.createBySuccess(user);
+	}
+	/**
+	 * 检验是否是管理员
+	 * @param user
+	 * @return
+	 */
+	@Override
+	public ServerResponse checkAdminRole(User user){
+		if(user != null && user.getRole().intValue() == Const.Role.ROLE_ADMIN){
+			return ServerResponse.createBySuccess();
+		}
+		return ServerResponse.createByError();
 	}
 }
 

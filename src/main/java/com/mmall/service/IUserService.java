@@ -12,6 +12,8 @@ public interface IUserService {
 	
 	ServerResponse<String> register(User user);
 	
+	ServerResponse<String> registerAdmin(User user);
+	
 	ServerResponse<String> checkVaild(String str,String type);
 	
 	ServerResponse selectQuestion(String username);
@@ -25,4 +27,6 @@ public interface IUserService {
 	ServerResponse<User> updateInformation(User user);
 	
 	ServerResponse<User> getInformation(Integer userId);
+	
+	ServerResponse checkAdminRole(User user);
 }

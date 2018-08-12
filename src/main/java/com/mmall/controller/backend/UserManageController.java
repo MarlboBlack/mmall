@@ -23,6 +23,13 @@ public class UserManageController {
 	@Autowired
 	private IUserService iUserService;
 	
+	/**
+	 * 管理员登录
+	 * @param username
+	 * @param password
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="login.do",method=RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse<User> login(String username,String password,HttpSession session){
@@ -37,5 +44,15 @@ public class UserManageController {
 			return ServerResponse.createByErrorMessage("不是管理员，无法登录");
 		}
 		return response;
+	}
+	/**
+	 * 管理员注册
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value="register_admin.do",method=RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse<String> registerAdmin(User user){
+		return iUserService.registerAdmin(user);
 	}
 }

@@ -79,7 +79,7 @@ public class UserController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value = "get_user-info.do",method = RequestMethod.POST)
+	@RequestMapping(value = "get_user_info.do",method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse<User> getUserInfo(HttpSession session){
 		User user = (User)session.getAttribute(Const.CURRENT_USER);
